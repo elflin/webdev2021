@@ -58,6 +58,9 @@
                         <li class="nav-item">
                             <a class="nav-link {{ $active_courses ?? '' }}" href="/courses">Courses</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ $active_students ?? '' }}" href="/students">Students</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

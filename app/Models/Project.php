@@ -14,4 +14,8 @@ class Project extends Model
     public function course(){
         return $this->belongsTo(Course::class, 'mata_kuliah', 'course_code');
     }
+
+    public function students(){
+        return $this->belongsToMany(student::class, 'member', 'project_id', 'nim')->withPivot('created_at');
+    }
 }

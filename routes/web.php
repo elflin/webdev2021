@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CourseController;
-use App\Http\Controllers\CustomController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -31,11 +31,9 @@ Route::get('/', function () {
 
 Route::resource('projects', ProjectController::class);
 Route::resource('courses', CourseController::class);
+Route::resource('students', StudentController::class);
 
 Auth::routes();
-// Route::resource('custom', CustomController::class);
-
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth'])->group(function(){
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
