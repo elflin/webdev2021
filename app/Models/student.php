@@ -9,6 +9,9 @@ class student extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'nim';
+    protected $keyType = 'string';
+
     protected $fillable = ['nim', 'nama', 'alamat', 'no_telp', 'tgl_lahir', 'jurusan'];
 
     public function projects(){

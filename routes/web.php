@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProjectController;
+
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -32,6 +34,11 @@ Route::get('/', function () {
 Route::resource('projects', ProjectController::class);
 Route::resource('courses', CourseController::class);
 Route::resource('students', StudentController::class);
+Route::resource('members', MemberController::class);
+Route::delete('membersDelete/{nim}/project/{id}', [MemberController::class, 'destroy'])->name('membersDelete');
+Route::get('/table', function(){
+    return view('table');
+});
 
 Auth::routes();
 

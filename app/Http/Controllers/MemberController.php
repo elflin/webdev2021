@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Project;
 use App\Models\student;
 use Illuminate\Http\Request;
 
-class StudentController extends Controller
+class MemberController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +14,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $active_students = "active";
-
-        $students = student::all();
-
-        return view('student', compact('active_students', 'students'));
+        //
     }
 
     /**
@@ -29,7 +24,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view('studentCreate');
+        //
     }
 
     /**
@@ -40,8 +35,9 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        student::create($request->all());
-        return redirect(route('students.index'));
+        $student = student::findOrFail($request->nim);
+        $student->projects()->attach($request->project);
+        return redirect(route('students.show', $request->nim));
     }
 
     /**
@@ -52,10 +48,7 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        $student = student::findOrFail($id);
-        $projects = Project::all();
-
-        return view('studentView', compact('student', 'projects'));
+        //
     }
 
     /**
@@ -66,8 +59,7 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        $student = student::where('nim', $id)->first();
-        return view('studentEdit', compact('student'));
+        //
     }
 
     /**
@@ -79,9 +71,7 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $student = student::where('nim', $id)->first();
-        $student->update($request->all());
-        return redirect(route('students.index'));
+        //
     }
 
     /**
@@ -90,10 +80,11 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($nim, $project)
     {
-        $student = student::where('nim', $id)->first();
-        $student->delete();
-        return redirect(route('students.index'));
+        //
+        $student = student::findOrFail($nim);
+        $student->projects()->detach($project);
+        return redirect(route('students.show', $nim));
     }
 }

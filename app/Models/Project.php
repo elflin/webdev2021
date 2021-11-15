@@ -16,6 +16,6 @@ class Project extends Model
     }
 
     public function students(){
-        return $this->belongsToMany(student::class, 'member', 'project_id', 'nim')->withPivot('created_at');
+        return $this->belongsToMany(student::class, 'members', 'project_id', 'nim')->withPivot('created_at');
     }
 }

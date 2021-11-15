@@ -11,7 +11,7 @@
             </div>
 
 
-            <table class="table">
+            <table class="table" id="table">
                 <thead>
                     <tr>
                         <th scope="col">No</th>
