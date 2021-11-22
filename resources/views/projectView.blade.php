@@ -12,7 +12,7 @@
 
         <div class="row">
             <b>List Member</b>
-            <table class="table">
+            <table class="table" id="table">
                 <thead>
                     <tr>
                         <th scope="col">No</th>

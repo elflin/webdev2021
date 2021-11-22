@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProjectController;
 
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\UserController;
+use App\Models\Project;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -22,7 +23,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home', 
+    return view(
+        'home',
         [
             "active_welcome" => "active",
             "active_projects" => "",
@@ -31,30 +33,27 @@ Route::get('/', function () {
     );
 });
 
-Route::resource('projects', ProjectController::class);
-Route::resource('courses', CourseController::class);
-Route::resource('students', StudentController::class);
-Route::resource('members', MemberController::class);
-Route::delete('membersDelete/{nim}/project/{id}', [MemberController::class, 'destroy'])->name('membersDelete');
-Route::get('/table', function(){
-    return view('table');
-});
+Auth::routes(['verify'=>true]);
 
-Auth::routes();
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::middleware(['auth'])->group(function(){
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::middleware(['admin'])->group(function () {
-        Route::get('admin', [AdminController::class, 'index']);
+    Route::middleware('user')->group(function () {
+        Route::resource('projects', ProjectController::class);
+        Route::resource('courses', CourseController::class);
     });
- 
-    Route::middleware(['user'])->group(function () {
-        Route::get('user', [UserController::class, 'index']);
-    });
- 
-    Route::get('/logout', function() {
-        Auth::logout();
-        redirect('/');
+
+    Route::middleware('admin')->group(function () {
+        // Route::resource('projects', ProjectController::class);
+        // Route::resource('courses', CourseController::class);
+        Route::resource('students', StudentController::class);
+        Route::resource('members', MemberController::class);
+        Route::delete('membersDelete/{nim}/project/{id}', [MemberController::class, 'destroy'])->name('membersDelete');
+        Route::get('/table', function () {
+            return view('table');
+        });
     });
 });
+
+

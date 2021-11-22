@@ -55,13 +55,13 @@
                             <a class="nav-link {{ $active_welcome ?? '' }}" aria-current="page" href="/">Welcome</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $active_projects ?? '' }}" href="/projects">Projects</a>
+                            <a class="nav-link {{ $active_projects ?? '' }}" href="{{ route('projects.index') }}">Projects</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $active_courses ?? '' }}" href="/courses">Courses</a>
+                            <a class="nav-link {{ $active_courses ?? '' }}" href="{{ route('courses.index') }}">Courses</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $active_students ?? '' }}" href="/students">Students</a>
+                            <a class="nav-link {{ $active_students ?? '' }}" href="{{ route('students.index') }}">Students</a>
                         </li>
                     </ul>
 

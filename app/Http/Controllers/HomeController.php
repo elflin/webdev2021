@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
 
     /**
@@ -25,12 +27,19 @@ class HomeController extends Controller
     public function index()
     {
         $role = Auth::user()->role;
-        if($role == "admin"){
-            return redirect()->to('admin');
-        } else if($role == "user"){
-            return redirect()->to('user');
-        } else {
-            return redirect()->to('logout');
-        }
+        return view('home', compact('role'));
     }
+
+
+    public function projectView(){
+        $active_welcome = "";
+        $active_projects = "active";
+        $active_courses = "";
+
+        $projects = Project::all();
+        $courses = Course::all();
+
+        return view('user.project', compact('active_welcome', 'active_projects', 'active_courses', 'projects', 'courses'));
+    }
+
 }
