@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\log_apps;
 use App\Models\Project;
 use App\Models\student;
 use Illuminate\Http\Request;
@@ -54,7 +55,25 @@ class StudentController extends Controller
     {
         $student = student::findOrFail($id);
         $projects = Project::all();
+        
+        log_apps::create([
+            "tabel" => "student",
+            "userId" => 1,
+            "log_path" => "StudentController@show",
+            "log_desc" => "Access function show untuk menampilkan data student dari id"+$id,
+            "loh_ip" => "192.178.1.1",
 
+        ]);
+
+        log_apps::create([
+            "tabel" => "project",
+            "userId" => 1,
+            "log_path" => "StudentController@show",
+            "log_desc" => "Get all project related to id = "+$id,
+            "loh_ip" => "192.178.1.1",
+
+        ]);
+        
         return view('studentView', compact('student', 'projects'));
     }
 
@@ -94,6 +113,16 @@ class StudentController extends Controller
     {
         $student = student::where('nim', $id)->first();
         $student->delete();
+        log_apps::create([
+            "tabel" => "student",
+            "userId" => 1,
+            "log_path" => "StudentController@destroy",
+            "log_desc" => "Hapus data dengan id = "+$id,
+            "log_ip" => "192.178.1.1",
+
+        ]);
+
+        //
         return redirect(route('students.index'));
     }
 }
